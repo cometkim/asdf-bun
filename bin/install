@@ -10,28 +10,15 @@ source "${plugin_dir}/lib/utils.bash"
 
 function install_version() {
   local version=$1
-  local install_path=$2
-
-  local platform
-  platform=$(get_platform)
-
-  local arch
-  arch=$(get_arch)
-
-  local bin_url
-  bin_url=$(get_bin_url "$version" "$platform" "$arch")
-
-  local tmpdir
-  tmpdir=$(get_temp_dir)
-  trap "rm -rf $tmpdir" EXIT
+  local download_path=$2
+  local install_path=$3
 
   (
     mkdir -p "$install_path/bin"
 
     echo "Installing Bun v$version..."
-    curl -sSfLo "$tmpdir/bun.zip" "$bin_url" || fail "Couldn't download the Bun binary from $bin_url"
-    unzip -q -j "$tmpdir/bun.zip" "bun-$platform-$arch/bun" -d "$install_path/bin"
 
+    cp "$download_path/bun" "$install_path/bin/bun"
     chmod +x "$install_path/bin/bun"
 
     echo "Bun v$version is installed successfully!"
@@ -42,4 +29,4 @@ if [ "$ASDF_INSTALL_TYPE" != "version" ]; then
   fail "asdf-bun currently supports release install only"
 fi
 
-install_version "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
+install_version "$ASDF_INSTALL_VERSION" "$ASDF_DOWNLOAD_PATH" "$ASDF_INSTALL_PATH"
