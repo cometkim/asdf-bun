@@ -32,7 +32,7 @@ function list_github_tags() {
 
 function get_platform() {
   case "$OSTYPE" in
-    darwin*) echo -n "mac" ;;
+    darwin*) echo -n "darwin" ;;
     linux*) echo -n "linux" ;;
     *) fail "Unsupported platform" ;;
   esac
