@@ -2,7 +2,8 @@
 
 set -eo pipefail
 
-GITHUB_REPO="https://github.com/Jarred-Sumner/bun"
+GITHUB_REPO="Jarred-Sumner/bun"
+REPO_URL="https://github.com/$GITHUB_REPO"
 
 cmd="curl -s"
 if [ -n "$GITHUB_API_TOKEN" ]; then
@@ -15,8 +16,16 @@ function sort_versions() {
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
+function list_github_releases() {
+  $cmd \
+    -H 'Accept: application/vnd.github+json' \
+    "https://api.github.com/repos/$GITHUB_REPO/releases" |
+    grep -o '"tag_name": "bun-v.*"' |
+    sed -r 's/"tag_name": "bun-v(.*)"/\1/'
+}
+
 function list_github_tags() {
-  git ls-remote --tags --refs "$GITHUB_REPO" |
+  git ls-remote --tags --refs "$REPO_URL" |
     grep -o 'refs/tags/bun-v.*' | cut -d/ -f3- |
     sed 's/^bun-v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
 }

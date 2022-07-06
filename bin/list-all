@@ -8,4 +8,4 @@ plugin_dir=$(dirname "$(dirname "$current_script_path")")
 # shellcheck source=../lib/utils.bash
 source "${plugin_dir}/lib/utils.bash"
 
-list_github_tags | sort_versions | sed 1,58d | xargs echo
+list_github_releases | sort_versions | sed 1,11d | xargs echo
