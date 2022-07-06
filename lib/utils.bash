@@ -51,7 +51,7 @@ function get_bin_url() {
   local platform=$2
   local arch=$3
 
-  local url="$GITHUB_REPO/releases/download/bun-v$version/bun-$platform-$arch.zip"
+  local url="$REPO_URL/releases/download/bun-v$version/bun-$platform-$arch.zip"
 
   echo -n "$url"
 }
@@ -59,7 +59,7 @@ function get_bin_url() {
 function get_source_url() {
   local version=$1
 
-  echo -n "$GITHUB_REPO/archive/bun-v$version.zip"
+  echo -n "$REPO_URL/archive/bun-v$version.zip"
 }
 
 function get_temp_dir() {
