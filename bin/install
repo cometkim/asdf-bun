@@ -28,11 +28,13 @@ function install_version() {
   (
     mkdir -p "$install_path/bin"
 
-    echo "Installing Bun v$version"
+    echo "Installing Bun v$version..."
     curl -sSfLo "$tmpdir/bun.zip" "$bin_url" || fail "Couldn't download the Bun binary from $bin_url"
-    unzip -j "$tmpdir/bun.zip" "bun-$platform-$arch/bun" -d "$install_path/bin"
+    unzip -q -j "$tmpdir/bun.zip" "bun-$platform-$arch/bun" -d "$install_path/bin"
 
     chmod +x "$install_path/bin/bun"
+
+    echo "Bun v$version is installed successfully!"
   ) || (rm -rf "$install_path"; exit 1)
 }
 
