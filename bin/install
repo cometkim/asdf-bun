@@ -22,7 +22,7 @@ function install_version() {
     chmod +x "$install_path/bin/bun"
 
     echo "Bun v$version is installed successfully!"
-  ) || (rm -rf "$install_path"; exit 1)
+  ) || (rm -rf "$install_path"; fail "Failed to install Bun v$version")
 }
 
 if [ "$ASDF_INSTALL_TYPE" != "version" ]; then
