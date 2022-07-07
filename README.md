@@ -6,7 +6,7 @@
 ## Installation
 
 ```bash
-asdf plugin add bun https://github.com/cometkim/asdf-bun
+asdf plugin add bun
 ```
 
 ## Usage
