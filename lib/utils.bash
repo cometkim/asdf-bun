@@ -21,7 +21,7 @@ function list_github_releases() {
     -H 'Accept: application/vnd.github+json' \
     "https://api.github.com/repos/$GITHUB_REPO/releases" |
     grep -o '"tag_name": "bun-v.*"' |
-    sed -r 's/"tag_name": "bun-v(.*)"/\1/'
+    sed -E 's/"tag_name": "bun-v(.*)"/\1/'
 }
 
 function list_github_tags() {
