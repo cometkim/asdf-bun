@@ -41,7 +41,7 @@ function get_platform() {
 function get_arch() {
   case "$(uname -m)" in
     x86_64) echo -n "x64" ;;
-    aarch64) echo -n "aarch64" ;;
+    aarch64|arm64) echo -n "aarch64" ;;
     *) fail "Unsupported architecture" ;;
   esac
 }
