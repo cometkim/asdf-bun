@@ -2,10 +2,10 @@
 
 set -eo pipefail
 
-GITHUB_REPO="Jarred-Sumner/bun"
+GITHUB_REPO="oven-sh/bun"
 REPO_URL="https://github.com/$GITHUB_REPO"
 
-cmd="curl -s"
+cmd="curl -fsSL"
 if [ -n "$GITHUB_API_TOKEN" ]; then
  cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
 fi
