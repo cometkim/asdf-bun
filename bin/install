@@ -21,6 +21,9 @@ function install_version() {
     cp "$download_path/bun" "$install_path/bin/bun"
     chmod +x "$install_path/bin/bun"
 
+    # install completions, which also creates the `bunx` library for asdf to generate a shim for
+    $install_path/bin/bun completions
+
     echo "Bun v$version is installed successfully!"
   ) || (rm -rf "$install_path"; fail "Failed to install Bun v$version")
 }
