@@ -5,6 +5,9 @@ set -eo pipefail
 current_script_path=${BASH_SOURCE[0]}
 plugin_dir=$(dirname "$(dirname "$current_script_path")")
 
+# shellcheck source=../lib/semver.bash
+source "${plugin_dir}/lib/semver.bash"
+
 # shellcheck source=../lib/utils.bash
 source "${plugin_dir}/lib/utils.bash"
 
@@ -21,11 +24,19 @@ function install_version() {
     cp "$download_path/bun" "$install_path/bin/bun"
     chmod +x "$install_path/bin/bun"
 
+    if semver_compare "0.4.0" "$version"; then
+      {
+        echo "#!/usr/bin/env bash";
+        echo "bun x \$@"
+      } > "$install_path/bin/bunx"
+      chmod +x "$install_path/bin/bunx"
+    fi
+
     echo "Bun v$version is installed successfully!"
   ) || (rm -rf "$install_path"; fail "Failed to install Bun v$version")
 }
 
-if [ "$ASDF_INSTALL_TYPE" != "version" ]; then
+if [[ "$ASDF_INSTALL_TYPE" != "version" ]]; then
   fail "asdf-bun currently supports release install only"
 fi
 
