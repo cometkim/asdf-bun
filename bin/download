@@ -33,7 +33,7 @@ function download_version() {
   ) || (rm -rf "$download_path"; fail "Failed to download Bun v$version")
 }
 
-if [ "$ASDF_INSTALL_TYPE" != "version" ]; then
+if [[ "$ASDF_INSTALL_TYPE" != "version" ]]; then
   fail "asdf-bun currently supports release install only"
 fi
 
