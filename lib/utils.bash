@@ -64,7 +64,7 @@ function get_source_url() {
 
 function get_temp_dir() {
   local tmpdir
-  tmpdir=$(mktemp -d asdf-bun.XXXX)
+  tmpdir=$(mktemp -t -d asdf-bun.XXXX)
 
   echo -n "$tmpdir"
 }
