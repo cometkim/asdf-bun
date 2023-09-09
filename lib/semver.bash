@@ -42,16 +42,22 @@ semver_compare() {
 
   set $A $B
 
-  if [[ "$1" -gt "$6" || "$2" -gt "$7" ]]; then
-    return 1;
+  if [[ "$6" -gt "$1" ]]; then
+    return 0;
+  elif [[ "$6" -eq "$1" && "$7" -gt "$2" ]]; then
+    return 0;
+  elif [[ "$6" -eq "$1" && "$7" -eq "$2" && "$8" -gt "$3" ]]; then
+    return 0;
   fi
+
+  return 1;
 }
 
 semver_equal() {
   local A
   A=$(semver_parse "$1")
 
-  if [ $? != 0 ]; then
+  if [[ $? != 0 ]]; then
     return 2
   fi
 

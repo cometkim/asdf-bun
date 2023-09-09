@@ -24,7 +24,7 @@ function install_version() {
     cp "$download_path/bun" "$install_path/bin/bun"
     chmod +x "$install_path/bin/bun"
 
-    if semver_compare "0.4.0" "$version"; then
+    if semver_compare "0.4.0" "$version" || semver_equal "0.4.0" "$version"; then
       {
         echo "#!/usr/bin/env bash";
         echo "bun x \$@"
