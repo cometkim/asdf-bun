@@ -63,8 +63,12 @@ function get_source_url() {
 }
 
 function get_temp_dir() {
+  local base
+  base="${TMPDIR:-/tmp}"
+  base="${base%/}"
+
   local tmpdir
-  tmpdir=$(mktemp -t -d asdf-bun.XXXX)
+  tmpdir=$(mktemp -d "$base/asdf-bun.XXXX")
 
   echo -n "$tmpdir"
 }
