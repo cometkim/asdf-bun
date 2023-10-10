@@ -5,9 +5,9 @@ set -eo pipefail
 GITHUB_REPO="oven-sh/bun"
 REPO_URL="https://github.com/$GITHUB_REPO"
 
-cmd="curl -fsSL"
-if [ -n "$GITHUB_API_TOKEN" ]; then
- cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
+curl_opts=(-fsSL)
+if [ -n "${GITHUB_API_TOKEN:-}" ]; then
+  curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
 
 # stolen from https://github.com/rbenv/ruby-build/pull/631/files#diff-fdcfb8a18714b33b07529b7d02b54f1dR942
@@ -17,8 +17,8 @@ function sort_versions() {
 }
 
 function list_github_releases() {
-  $cmd \
-    -H 'Accept: application/vnd.github+json' \
+  curl "${curl_opts[@]}" \
+    -H "Accept: application/vnd.github+json" \
     "https://api.github.com/repos/$GITHUB_REPO/releases" |
     grep -o '"tag_name": "bun-v.*"' |
     sed -E 's/"tag_name": "bun-v(.*)"/\1/'
