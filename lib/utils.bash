@@ -51,7 +51,15 @@ function get_bin_url() {
   local platform=$2
   local arch=$3
 
-  local url="$REPO_URL/releases/download/bun-v$version/bun-$platform-$arch.zip"
+  local target="$platform-$arch"
+  if [[ "$target" = "linux-x64" ]]; then
+    # See https://github.com/cometkim/asdf-bun/issues/21
+    if [[ "$(grep "avx2" < /proc/cpuinfo)" = "" ]]; then
+        target="linux-x64-baseline"
+    fi
+  fi
+
+  local url="$REPO_URL/releases/download/bun-v$version/bun-$target.zip"
 
   echo -n "$url"
 }
