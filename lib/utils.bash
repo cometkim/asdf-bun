@@ -46,10 +46,12 @@ function get_arch() {
   esac
 }
 
-function get_bin_url() {
-  local version=$1
-  local platform=$2
-  local arch=$3
+function get_bin_target() {
+  local platform
+  platform=$(get_platform)
+
+  local arch
+  arch=$(get_arch)
 
   local target="$platform-$arch"
   if [[ "$target" = "linux-x64" ]]; then
@@ -57,11 +59,16 @@ function get_bin_url() {
     if [[ "$(grep "avx2" < /proc/cpuinfo)" = "" ]]; then
         target="linux-x64-baseline"
     fi
-  fi
+  fi 
 
-  local url="$REPO_URL/releases/download/bun-v$version/bun-$target.zip"
+  echo -n "bun-$target"
+}
 
-  echo -n "$url"
+function get_bin_url() {
+  local version=$1
+  local target=$2
+
+  echo -n "$REPO_URL/releases/download/bun-v$version/$target.zip"
 }
 
 function get_source_url() {

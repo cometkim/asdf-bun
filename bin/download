@@ -12,14 +12,11 @@ function download_version() {
   local version=$1
   local download_path=$2
 
-  local platform
-  platform=$(get_platform)
-
-  local arch
-  arch=$(get_arch)
+  local bin_target
+  bin_target=$(get_bin_target)
 
   local bin_url
-  bin_url=$(get_bin_url "$version" "$platform" "$arch")
+  bin_url=$(get_bin_url "$version" "$bin_target")
 
   local tmpdir
   tmpdir=$(get_temp_dir)
@@ -31,7 +28,7 @@ function download_version() {
     echo "Downloading Bun v$version..."
     curl "${curl_opts[@]}" -o "$tmpdir/bun.zip" "$bin_url" || fail "Couldn't download the Bun binary from $bin_url"
 
-    unzip -j "$tmpdir/bun.zip" "bun-$platform-$arch/bun" -d "$download_path"
+    unzip -j "$tmpdir/bun.zip" "$bin_target/bun" -d "$download_path"
   ) || (rm -rf "$download_path"; fail "Failed to download Bun v$version")
 }
 
