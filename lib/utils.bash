@@ -19,7 +19,7 @@ function sort_versions() {
 function list_github_releases() {
   curl "${curl_opts[@]}" \
     -H "Accept: application/vnd.github+json" \
-    "https://api.github.com/repos/$GITHUB_REPO/releases" |
+    "https://api.github.com/repos/$GITHUB_REPO/releases?per_page=100" |
     grep -o '"tag_name": "bun-v.*"' |
     sed -E 's/"tag_name": "bun-v(.*)"/\1/'
 }
