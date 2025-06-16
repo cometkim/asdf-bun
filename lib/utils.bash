@@ -83,7 +83,7 @@ function get_temp_dir() {
   base="${base%/}"
 
   local tmpdir
-  tmpdir=$(mktemp -d "$base/asdf-bun.XXXX")
+  tmpdir=$(mktemp -d "$base/asdf-bun.XXXXXX")
 
   echo -n "$tmpdir"
 }
